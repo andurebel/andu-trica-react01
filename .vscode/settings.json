@@ -28,7 +28,6 @@
   "liveServer.settings.donotVerifyTags": true,
 
   "launch": {
-
     "configurations": [],
     "compounds": []
   },
@@ -38,4 +37,3 @@
   "json.schemas": [],
   "javascript.updateImportsOnFileMove.enabled": "always"
 }
-
