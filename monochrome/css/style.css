@@ -527,11 +527,21 @@ imaginea. Imi strica alinierea si nu am reusit sa o remediez, asa ca am apelat
   max-height: 300px;
 }
 
+.product-tile .product-tile-controls .active .busy {
+  display: flex;
+}
+
 .product-tile-controls {
   position: absolute;
   top: 16px;
   right: 16px;
   display: flex;
+  justify-content: space-between;
+}
+
+.product-tile-controls button {
+  display: flex;
+  justify-content: space-between;
 }
 
 .product-tile-controls a {
@@ -541,8 +551,32 @@ imaginea. Imi strica alinierea si nu am reusit sa o remediez, asa ca am apelat
   margin-left: 16px;
 }
 
-.product-tile-controls a i:hover {
-  color: #740878;
+.product-tile-controls [type='button'] {
+  display: flex;
+}
+
+.product-tile-controls a i:hover,
+.product-tile-controls a i .active {
+  color: #ff6b6b;
+}
+
+.product-tile-controls .active,
+.product-tile-controls:hover {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.product-tile-controls .icon {
+  display: none;
+}
+
+.product-tile-controls .busy .icon {
+  display: block;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
 }
 
 /* nu am vazut deloc hover in design. sterg daca nu e in regula :D
@@ -635,11 +669,27 @@ aside img {
   margin: 2.5px 0;
   border-color: white;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .footer-sign-up-newsletter button {
   margin: 10px 5px;
   padding: 5px 0;
   font-family: 'Roboto';
   font-weight: normal;
+}
+
+.footer-sign-up-newsletter button[type='submit'].busy .icon {
+  animation: spin 1s linear infinite;
+  color: red;
 }
 
 .footer-sign-up-newsletter button {

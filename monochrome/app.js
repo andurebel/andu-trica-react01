@@ -1,5 +1,5 @@
-class NewsletterForm extends React.Component {
-  // v1
+class SignUpNewsletter extends React.Component {
+  //state
   state = {
     email: '',
     inputMessage: '',
@@ -14,15 +14,15 @@ class NewsletterForm extends React.Component {
     return re.test(String(email).toLowerCase());
   }
 
-  // handleSubmit
+  //handle submit
+
   onSubmit = (event) => {
     event.preventDefault();
-
     const email = this.state.email;
 
     if (!this.validateEmail(email)) {
       this.setState({
-        inputMessage: 'Please use a valid email',
+        inputMessage: 'Please enter a valid email',
       });
 
       return;
@@ -34,12 +34,12 @@ class NewsletterForm extends React.Component {
 
     setTimeout(() => {
       this.setState({
-        busy: false,
         email: '',
+        busy: false,
         submittedValue: this.state.email,
         submitted: true,
       });
-    }, 3000);
+    }, 2000);
   };
 
   onInputChange = (event) => {
@@ -51,41 +51,32 @@ class NewsletterForm extends React.Component {
   render() {
     return (
       <div>
-        {this.state.submitted === true ? (
+        {this.state.submitted ? (
           <div className="container">
-            Hello {this.state.submittedValue}, thank you for submiting.
+            Hi {this.state.submittedValue} , thanks for signing up to our
+            newsletter!
           </div>
         ) : (
-          <form onSubmit={this.onSubmit} className="form-newsletter container">
-            <label htmlFor="field-newsletter">
-              Subscribe to our <span>newsletter</span>
-            </label>
-
-            <div>
-              <input
-                type="text"
-                name="field-newsletter"
-                id="field-newsletter"
-                value={this.state.email}
-                onChange={this.onInputChange}
-                placeholder="enter your email address to receive the latest news!"
-              ></input>
-
-              {this.state.inputMessage.length > 0 ? (
-                <div className="message">{this.state.inputMessage}</div>
-              ) : null}
-            </div>
-
+          <form onSubmit={this.onSubmit} className="footer-sign-up-newsletter">
+            <label htmlFor="email-newsletter">Sign up for our newsletter</label>
+            <input
+              type="email"
+              name="email"
+              id="email-newsletter"
+              value={this.state.email}
+              onChange={this.onInputChange}
+              placeholder="Enter email address here..."
+            ></input>
             <button
               type="submit"
-              title="Subscribe"
+              title="Submit"
               disabled={this.state.busy}
-              className={`${this.state.busy === true ? 'busy' : ''}`}
+              className={`${this.state.busy ? 'busy' : ''}`}
             >
               {this.state.busy ? (
                 <i className="fas fa-spinner icon"></i>
               ) : (
-                'Subscribe'
+                'Sign Up now'
               )}
             </button>
           </form>
@@ -95,18 +86,17 @@ class NewsletterForm extends React.Component {
   }
 }
 
-const newsletterContainer = document.querySelector('.home-newsletter');
-ReactDOM.render(<NewsletterForm></NewsletterForm>, newsletterContainer);
+const signUpContainer = document.querySelector('.footer-sign-up-newsletter');
+ReactDOM.render(<SignUpNewsletter></SignUpNewsletter>, signUpContainer);
 
 class AddToCartButton extends React.Component {
-  // v1
   state = {
     added: false,
     busy: false,
   };
 
   onClick = () => {
-    if (this.state.busy === true) {
+    if (this.state.busy) {
       return;
     }
 
@@ -131,7 +121,7 @@ class AddToCartButton extends React.Component {
   render() {
     return (
       <button
-        className={`product-control ${
+        className={`product-tile-controls ${
           this.state.added === true ? 'active' : ''
         } ${this.state.busy === true ? 'busy' : ''}`}
         type="button"
@@ -150,15 +140,10 @@ class AddToCartButton extends React.Component {
 }
 
 class AddToWishlistButton extends React.Component {
-  // v2
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      added: false,
-      busy: false,
-    };
-  }
+  state = {
+    added: false,
+    busy: false,
+  };
 
   onClick = () => {
     this.setState({
@@ -174,9 +159,9 @@ class AddToWishlistButton extends React.Component {
   };
 
   render() {
-    var { added, busy } = this.state;
-    var className =
-      'product-control' +
+    const { added, busy } = this.state;
+    let ClassName =
+      'product-tile-controls ' +
       ' ' +
       (added ? 'active' : '') +
       ' ' +
@@ -184,7 +169,7 @@ class AddToWishlistButton extends React.Component {
 
     return (
       <button
-        className={className}
+        className={ClassName}
         type="button"
         onClick={this.onClick}
         title={added === true ? 'Remove from Wishlist' : 'Add to Wishlist'}
@@ -200,7 +185,7 @@ class AddToWishlistButton extends React.Component {
 }
 
 class ProductControls extends React.Component {
-  render() {
+  render(props) {
     const productId = this.props.productId;
 
     return [
@@ -214,6 +199,7 @@ class ProductControls extends React.Component {
 }
 
 const productTileControls = document.querySelectorAll('.product-tile-controls');
+
 productTileControls.forEach((productTileControl, index) => {
   ReactDOM.render(
     <ProductControls key={index} productId={index}></ProductControls>,
