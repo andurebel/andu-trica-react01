@@ -1,9 +1,6 @@
 const ADD_TO_CART_EVENT = 'cart:add';
-
 const REMOVE_FROM_CART_EVENT = 'cart:remove';
-
 const ADD_TO_WISHLIST_EVENT = 'wl:add';
-
 const REMOVE_FROM_WISHLIST_EVENT = 'wl:remove';
 
 class NewsletterForm extends React.Component {
@@ -93,7 +90,7 @@ class NewsletterForm extends React.Component {
               {this.state.busy ? (
                 <i className="fas fa-spinner icon"></i>
               ) : (
-                'Subscribe'
+                'Subsribe'
               )}
             </button>
           </form>
@@ -242,18 +239,30 @@ class HeaderCounters extends React.Component {
     wishlistItems: [],
   };
 
-  showProducts(collectionName) {
-    alert(this.state[collectionName]);
+  showProducts(collectionName, displayName) {
+    let message = '';
+    const bucket = displayName.toLowerCase();
+
+    if (this.state[collectionName] < 1) {
+      message = `There are no products in your ${bucket}.`;
+    }
+
+    message = `These are the pids in your ${bucket}: ${
+      this.state[`${bucket}Items`]
+    }`;
+
+    alert(message);
   }
 
   productCartAction = (event) => {
     const { productId } = event.detail;
-    const eventType = event.type;
-    let { cartItemsCount } = this.state;
+    const { type: eventType } = event;
+    let { cartItemsCount, cartItems } = this.state;
 
     switch (eventType) {
       case ADD_TO_CART_EVENT:
         cartItemsCount++;
+        cartItems.push(productId);
         break;
       case REMOVE_FROM_CART_EVENT:
         cartItemsCount--;
@@ -262,6 +271,7 @@ class HeaderCounters extends React.Component {
 
     this.setState({
       cartItemsCount,
+      cartItems,
     });
   };
 
@@ -277,20 +287,22 @@ class HeaderCounters extends React.Component {
       <React.Fragment>
         <div className="header-counter">
           <span className="qty">{wishlistItemsCount}</span>
+
           <i
             className="fas fa-heart icon"
             onClick={() => {
-              this.showProducts('wishlistItemsCount');
+              this.showProducts('wishlistItemsCount', 'Wishlist');
             }}
           ></i>
         </div>
 
         <div className="header-counter">
           <span className="qty">{cartItemsCount}</span>
+
           <i
             className="fas fa-shopping-cart icon"
             onClick={() => {
-              this.showProducts('cartItemsCount');
+              this.showProducts('cartItemsCount', 'Cart');
             }}
           ></i>
         </div>
@@ -300,5 +312,4 @@ class HeaderCounters extends React.Component {
 }
 
 const headerCounters = document.querySelector('.header-counters');
-
 ReactDOM.render(<HeaderCounters></HeaderCounters>, headerCounters);
