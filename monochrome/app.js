@@ -121,18 +121,23 @@ class AddToCartButton extends React.Component {
   render() {
     return (
       <button
-        className={`product-tile-controls ${
+        className={`product-control ${
           this.state.added === true ? 'active' : ''
         } ${this.state.busy === true ? 'busy' : ''}`}
         type="button"
         title={this.state.added === true ? 'Remove from Cart' : 'Add to Cart'}
         onClick={this.onClick}
       >
-        <span>
-          {this.state.added === true
-            ? `PID: ${this.props.productId} in cart`
-            : 'Add to cart'}
-        </span>
+        {this.state.added === true ? (
+          <span>
+            <i className="fas fa-plus-square"></i>
+          </span>
+        ) : (
+          <span>
+            <i className="far fa-plus-square"></i>
+          </span>
+        )}
+
         <i className="fas fa-spinner icon"></i>
       </button>
     );
@@ -169,7 +174,7 @@ class AddToWishlistButton extends React.Component {
 
     return (
       <button
-        className={ClassName}
+        className={`product-control ${busy ? 'busy' : ''}`}
         type="button"
         onClick={this.onClick}
         title={added === true ? 'Remove from Wishlist' : 'Add to Wishlist'}

@@ -497,6 +497,17 @@ oare pusa iconita direct in placeholder? */
   max-width: 313px;
 }
 
+.product-control {
+  display: block;
+  margin-right: 8px;
+  background: transparent;
+  border: 0;
+  font-size: 25px;
+  margin: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
 /* aliniere "lookbook" din header-bottom cu
 ultima img din catalog tiles. --> nu sunt convinsa ca e solutia potrivita.
 Initial am vrut sa adaug o margine pe fiecare article, fara sa redimensionez
@@ -527,7 +538,7 @@ imaginea. Imi strica alinierea si nu am reusit sa o remediez, asa ca am apelat
   max-height: 300px;
 }
 
-.product-tile .product-tile-controls .active .busy {
+.product-tile .product-tile-controls .active {
   display: flex;
 }
 
@@ -555,14 +566,11 @@ imaginea. Imi strica alinierea si nu am reusit sa o remediez, asa ca am apelat
   display: flex;
 }
 
-.product-tile-controls a i:hover,
-.product-tile-controls a i .active {
-  color: #ff6b6b;
+.product-tile-controls i .busy {
+  color: red;
 }
 
-.product-tile-controls .active,
-.product-tile-controls:hover {
-  background-color: #ff6b6b;
+.product-tile-controls .active {
   color: #fff;
 }
 
