@@ -176,6 +176,17 @@ class AddToWishlistButton extends React.Component {
     });
 
     setTimeout(() => {
+      const { productId } = this.props;
+      dispatchEvent(
+        new CustomEvent(
+          this.state.added ? REMOVE_FROM_WISHLIST_EVENT : ADD_TO_WISHLIST_EVENT,
+          {
+            detail: {
+              productId,
+            },
+          },
+        ),
+      );
       this.setState({
         busy: false,
         added: !this.state.added,
@@ -279,9 +290,46 @@ class HeaderCounters extends React.Component {
     });
   };
 
+  productWishlistAction = (event) => {
+    const { productId } = event.detail;
+    const eventType = event.type;
+
+    const { wishlistItems } = this.state;
+    let newProductIds = [];
+    let productCount = 0;
+
+    switch (eventType) {
+      case ADD_TO_WISHLIST_EVENT:
+        newProductIds =
+          wishlistItems.length === 0
+            ? [productId]
+            : [...wishlistItems, productId];
+        productCount = newProductIds.length;
+        break;
+      case REMOVE_FROM_WISHLIST_EVENT:
+        for (let i = 0; i < wishlistItems.length; i++) {
+          if (wishlistItems[i] === productId) {
+            continue;
+          }
+          newProductIds.push(wishlistItems[i]);
+        }
+        break;
+    }
+
+    productCount = newProductIds.length;
+
+    this.setState({
+      wishlistItemsCount: productCount,
+      wishlistItems: newProductIds,
+    });
+  };
+
   componentDidMount() {
     addEventListener(ADD_TO_CART_EVENT, this.productCartAction);
     addEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+
+    addEventListener(ADD_TO_WISHLIST_EVENT, this.productWishlistAction);
+    addEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
   }
 
   render() {
