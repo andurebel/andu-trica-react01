@@ -1,3 +1,11 @@
+const ADD_TO_CART_EVENT = 'cart:add';
+
+const REMOVE_FROM_CART_EVENT = 'cart:remove';
+
+const ADD_TO_WISHLIST_EVENT = 'wl:add';
+
+const REMOVE_FROM_WISHLIST_EVENT = 'wl:remove';
+
 class NewsletterForm extends React.Component {
   // v1
   state = {
@@ -116,9 +124,14 @@ class AddToCartButton extends React.Component {
 
     setTimeout(() => {
       dispatchEvent(
-        new CustomEvent('cart:add', {
-          detail: this.props.productId,
-        }),
+        new CustomEvent(
+          this.state.added ? REMOVE_FROM_CART_EVENT : ADD_TO_CART_EVENT,
+          {
+            detail: {
+              productId: this.props.productId,
+            },
+          },
+        ),
       );
 
       this.setState({
@@ -220,3 +233,72 @@ productTileControls.forEach((productTileControl, index) => {
     productTileControl,
   );
 });
+
+class HeaderCounters extends React.Component {
+  state = {
+    cartItemsCount: 0,
+    wishlistItemsCount: 0,
+    cartItems: [],
+    wishlistItems: [],
+  };
+
+  showProducts(collectionName) {
+    alert(this.state[collectionName]);
+  }
+
+  productCartAction = (event) => {
+    const { productId } = event.detail;
+    const eventType = event.type;
+    let { cartItemsCount } = this.state;
+
+    switch (eventType) {
+      case ADD_TO_CART_EVENT:
+        cartItemsCount++;
+        break;
+      case REMOVE_FROM_CART_EVENT:
+        cartItemsCount--;
+        break;
+    }
+
+    this.setState({
+      cartItemsCount,
+    });
+  };
+
+  componentDidMount() {
+    addEventListener(ADD_TO_CART_EVENT, this.productCartAction);
+    addEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+  }
+
+  render() {
+    const { wishlistItemsCount, cartItemsCount } = this.state;
+
+    return (
+      <React.Fragment>
+        <div className="header-counter">
+          <span className="qty">{wishlistItemsCount}</span>
+          <i
+            className="fas fa-heart icon"
+            onClick={() => {
+              this.showProducts('wishlistItemsCount');
+            }}
+          ></i>
+        </div>
+
+        <div className="header-counter">
+          <span className="qty">{cartItemsCount}</span>
+          <i
+            className="fas fa-shopping-cart icon"
+            onClick={() => {
+              this.showProducts('cartItemsCount');
+            }}
+          ></i>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
+const headerCounters = document.querySelector('.header-counters');
+
+ReactDOM.render(<HeaderCounters></HeaderCounters>, headerCounters);
