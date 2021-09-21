@@ -1,3 +1,8 @@
+const ADD_TO_CART_EVENT = 'cart:add';
+const REMOVE_FROM_CART_EVENT = 'cart:remove';
+const ADD_TO_WISHLIST_EVENT = 'wl:add';
+const REMOVE_FROM_WISHLIST_EVENT = 'wl:remove';
+
 class NewsletterForm extends React.Component {
   // v1
   state = {
@@ -85,7 +90,7 @@ class NewsletterForm extends React.Component {
               {this.state.busy ? (
                 <i className="fas fa-spinner icon"></i>
               ) : (
-                'Subscribe'
+                'Subsribe'
               )}
             </button>
           </form>
@@ -116,9 +121,14 @@ class AddToCartButton extends React.Component {
 
     setTimeout(() => {
       dispatchEvent(
-        new CustomEvent('cart:add', {
-          detail: this.props.productId,
-        }),
+        new CustomEvent(
+          this.state.added ? REMOVE_FROM_CART_EVENT : ADD_TO_CART_EVENT,
+          {
+            detail: {
+              productId: this.props.productId,
+            },
+          },
+        ),
       );
 
       this.setState({
@@ -166,6 +176,17 @@ class AddToWishlistButton extends React.Component {
     });
 
     setTimeout(() => {
+      const { productId } = this.props;
+      dispatchEvent(
+        new CustomEvent(
+          this.state.added ? REMOVE_FROM_WISHLIST_EVENT : ADD_TO_WISHLIST_EVENT,
+          {
+            detail: {
+              productId,
+            },
+          },
+        ),
+      );
       this.setState({
         busy: false,
         added: !this.state.added,
@@ -220,3 +241,149 @@ productTileControls.forEach((productTileControl, index) => {
     productTileControl,
   );
 });
+
+class HeaderCounters extends React.Component {
+  state = {
+    cartItemsCount: 0,
+    wishlistItemsCount: 0,
+    cartItems: [],
+    wishlistItems: [],
+    showWishlistButton: true,
+  };
+
+  showProducts(collectionName, displayName) {
+    let message = '';
+    const bucket = displayName.toLowerCase();
+
+    if (this.state[collectionName] < 1) {
+      message = `There are no products in your ${bucket}.`;
+    }
+
+    message = `These are the pids in your ${bucket}: ${
+      this.state[`${bucket}Items`]
+    }`;
+
+    alert(message);
+  }
+
+  productCartAction = (event) => {
+    const { productId } = event.detail;
+    const { type: eventType } = event;
+    let { cartItemsCount, cartItems } = this.state;
+
+    switch (eventType) {
+      case ADD_TO_CART_EVENT:
+        cartItemsCount++;
+        cartItems.push(productId);
+        break;
+      case REMOVE_FROM_CART_EVENT:
+        cartItemsCount--;
+
+        cartItems = cartItems.filter((item) => {
+          return item !== productId;
+        });
+        break;
+    }
+
+    this.setState({
+      cartItemsCount,
+      cartItems,
+    });
+  };
+
+  productWishlistAction = (event) => {
+    alert('on event')
+    const { productId } = event.detail;
+    const eventType = event.type;
+
+    const { wishlistItems } = this.state;
+    let newProductIds = [];
+    let productCount = 0;
+
+    switch (eventType) {
+      case ADD_TO_WISHLIST_EVENT:
+        newProductIds =
+          wishlistItems.length === 0
+            ? [productId]
+            : [...wishlistItems, productId];
+        productCount = newProductIds.length;
+        break;
+      case REMOVE_FROM_WISHLIST_EVENT:
+        for (let i = 0; i < wishlistItems.length; i++) {
+          if (wishlistItems[i] === productId) {
+            continue;
+          }
+          newProductIds.push(wishlistItems[i]);
+        }
+        break;
+    }
+
+    productCount = newProductIds.length;
+
+    this.setState({
+      wishlistItemsCount: productCount,
+      wishlistItems: newProductIds,
+    });
+  };
+
+  componentDidMount() {
+    addEventListener(ADD_TO_CART_EVENT, this.productCartAction);
+    addEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+
+    addEventListener(ADD_TO_WISHLIST_EVENT, this.productWishlistAction);
+    addEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
+  }
+
+  componenentWillUnmount(){
+    removeEventListener(ADD_TO_CART_EVENT, this.productCartAction);
+    removeEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+
+    removeEventListener(ADD_TO_WISHLIST_EVENT, this.productWishlistAction);
+    removeEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
+  }
+
+  render() {
+    const { wishlistItemsCount, cartItemsCount } = this.state;
+
+    return (
+      <React.Fragment>
+        <button
+          type="button"
+          title="add"
+          onClick={() => {
+            this.setState({
+              showWishlistButton: !this.state.showWishlistButton,
+            });
+          }}
+        >
+          Remove Wishlist
+        </button>
+        {this.state.showWishlistButton? (<div className="header-counter">
+          <span className="qty">{wishlistItemsCount}</span>
+
+          <i
+            className="fas fa-heart icon"
+            onClick={() => {
+              this.showProducts('wishlistItemsCount', 'Wishlist');
+            }}
+          ></i>
+        </div>)}
+
+
+        <div className="header-counter">
+          <span className="qty">{cartItemsCount}</span>
+
+          <i
+            className="fas fa-shopping-cart icon"
+            onClick={() => {
+              this.showProducts('cartItemsCount', 'Cart');
+            }}
+          ></i>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
+const headerCounters = document.querySelector('.header-counters');
+ReactDOM.render(<HeaderCounters></HeaderCounters>, headerCounters);
