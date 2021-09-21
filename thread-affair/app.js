@@ -266,6 +266,10 @@ class HeaderCounters extends React.Component {
         break;
       case REMOVE_FROM_CART_EVENT:
         cartItemsCount--;
+
+        cartItems = cartItems.filter((item) => {
+          return item !== productId;
+        });
         break;
     }
 
