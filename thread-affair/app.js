@@ -248,6 +248,7 @@ class HeaderCounters extends React.Component {
     wishlistItemsCount: 0,
     cartItems: [],
     wishlistItems: [],
+    showWishlistButton: true,
   };
 
   showProducts(collectionName, displayName) {
@@ -291,6 +292,7 @@ class HeaderCounters extends React.Component {
   };
 
   productWishlistAction = (event) => {
+    alert('on event')
     const { productId } = event.detail;
     const eventType = event.type;
 
@@ -332,12 +334,31 @@ class HeaderCounters extends React.Component {
     addEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
   }
 
+  componenentWillUnmount(){
+    removeEventListener(ADD_TO_CART_EVENT, this.productCartAction);
+    removeEventListener(REMOVE_FROM_CART_EVENT, this.productCartAction);
+
+    removeEventListener(ADD_TO_WISHLIST_EVENT, this.productWishlistAction);
+    removeEventListener(REMOVE_FROM_WISHLIST_EVENT, this.productWishlistAction);
+  }
+
   render() {
     const { wishlistItemsCount, cartItemsCount } = this.state;
 
     return (
       <React.Fragment>
-        <div className="header-counter">
+        <button
+          type="button"
+          title="add"
+          onClick={() => {
+            this.setState({
+              showWishlistButton: !this.state.showWishlistButton,
+            });
+          }}
+        >
+          Remove Wishlist
+        </button>
+        {this.state.showWishlistButton? (<div className="header-counter">
           <span className="qty">{wishlistItemsCount}</span>
 
           <i
@@ -346,7 +367,8 @@ class HeaderCounters extends React.Component {
               this.showProducts('wishlistItemsCount', 'Wishlist');
             }}
           ></i>
-        </div>
+        </div>)}
+
 
         <div className="header-counter">
           <span className="qty">{cartItemsCount}</span>
