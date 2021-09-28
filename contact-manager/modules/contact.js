@@ -13,7 +13,7 @@ export const render = (contact) => {
 
   phone.textContent = contact.phone;
   email.textContent = contact.email;
-  imformation.append(phone);
+  information.append(phone);
   information.append(email);
 
   contactContainer.append(heading);
