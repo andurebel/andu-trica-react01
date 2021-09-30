@@ -1,7 +1,8 @@
 import { render as renderEditForm } from './edit-contact.js';
 import { render as renderMessage } from './message.js';
 import { addMessage, clearMessages } from './notification-bar.js';
-import { deleteContact, getContact, editContact } from './query.js';
+import { deleteContact, getContact, editContact, addContact } from './query.js';
+import { contacts } from './data.js';
 
 const stage = document.querySelector('.stage');
 
@@ -50,8 +51,9 @@ stage.addEventListener('click', (event) => {
   const button = event.target;
 
   if (
-    button.nodeName === 'BUTTON' &&
-    button.classList.contains('cancel-edit-contact')
+    (button.nodeName === 'BUTTON' &&
+      button.classList.contains('cancel-edit-contact')) ||
+    button.classList.contains('cancel-add-contact')
   ) {
     clearStage();
     clearMessages();
@@ -91,6 +93,38 @@ stage.addEventListener('submit', (event) => {
     setTimeout(() => {
       clearMessages();
     }, 1500);
+  }
+});
+
+//execute add contact
+stage.addEventListener('submit', (event) => {
+  const form = event.target;
+
+  if (form.nodeName === 'FORM' && form.classList.contains('add-contact')) {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const contact = {};
+    const entries = formData.entries();
+    let currentEntry = entries.next();
+
+    while (currentEntry.done === false) {
+      const [a, b] = currentEntry.value;
+
+      contact[a] = b;
+
+      currentEntry = entries.next();
+    }
+
+    contact.id = contacts.length + 1;
+
+    addContact(contact);
+
+    const successMessage = renderMessage(`
+    Contact ${contact.name} ${contact.surname} saved. ,'success'
+    `);
+    addMessage(successMessage);
+    clearStage();
   }
 });
 
