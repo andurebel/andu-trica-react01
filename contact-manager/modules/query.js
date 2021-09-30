@@ -3,6 +3,7 @@ import { contacts } from './data.js';
 export const findContact = (needle = 'query') => {
   return contacts.filter((contact) => {
     const values = Object.values(contact);
+    //values [1, larry, larryson, ;]
 
     const haystack = values.reduce((string, value) => {
       if (typeof value === 'string') {
@@ -12,6 +13,7 @@ export const findContact = (needle = 'query') => {
       return string;
     }, '');
 
+    // haystack 'larrylarrysonlarry@yahoo.4141'
     if (haystack.includes(needle)) {
       return true;
     }
@@ -22,6 +24,7 @@ export const findContact = (needle = 'query') => {
 
 export const getContact = (contactId) => {
   contactId = Number(contactId);
+
   return contacts.find(({ id }) => {
     return id === contactId;
   });
@@ -30,6 +33,7 @@ export const getContact = (contactId) => {
 export const deleteContact = (contactId) => {
   let contactIndex = -1;
   contactId = Number(contactId);
+
   for (let i = 0; i < contacts.length; i++) {
     const { id } = contacts[i];
 
@@ -37,6 +41,7 @@ export const deleteContact = (contactId) => {
       contactIndex = i;
     }
   }
+
   if (contactIndex >= 0) {
     contacts.splice(contactIndex, 1);
   }

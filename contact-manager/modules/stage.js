@@ -1,11 +1,11 @@
-import { deleteContact, getContact } from './query.js';
-import { render as renderMessage } from './message.js';
-import { addMessage } from './notification-bar.js';
-
 import { render as renderEditForm } from './edit-contact.js';
+import { render as renderMessage } from './message.js';
+import { addMessage, clearMessages } from './notification-bar.js';
+import { deleteContact, getContact } from './query.js';
 
 const stage = document.querySelector('.stage');
 
+// delete contact
 stage.addEventListener('click', (event) => {
   const button = event.target;
 
@@ -14,6 +14,7 @@ stage.addEventListener('click', (event) => {
     button.classList.contains('delete-contact')
   ) {
     const contactId = button.dataset.contactId;
+
     deleteContact(contactId);
 
     const contactContainer = button.closest('.contact');
@@ -24,8 +25,7 @@ stage.addEventListener('click', (event) => {
   }
 });
 
-//start edit contact
-
+// start edit contact
 stage.addEventListener('click', (event) => {
   const button = event.target;
 
@@ -45,6 +45,7 @@ stage.addEventListener('click', (event) => {
   }
 });
 
+// cancel edit contact
 stage.addEventListener('click', (event) => {
   const button = event.target;
 
@@ -53,6 +54,7 @@ stage.addEventListener('click', (event) => {
     button.classList.contains('cancel-edit-contact')
   ) {
     clearStage();
+    clearMessages();
   }
 });
 

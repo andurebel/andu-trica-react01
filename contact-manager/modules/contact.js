@@ -1,13 +1,13 @@
 const buttonGroup = [
   {
-    name: 'delete',
-    displayName: 'Delete',
-    buttonClass: 'btn-danger',
-  },
-  {
     name: 'edit',
     displayName: 'Edit',
     buttonClass: 'btn-primary',
+  },
+  {
+    name: 'delete',
+    displayName: 'Delete',
+    buttonClass: 'btn-danger',
   },
 ];
 
@@ -16,14 +16,11 @@ export const render = (contact) => {
   contactContainer.classList.add('contact', 'border', 'p-3');
 
   const heading = document.createElement('h1');
-  heading.textContent = `
-    ${contact.name} ${contact.surname}
-  `;
+  heading.innerText = `${contact.name} ${contact.surname}`;
 
   const information = document.createElement('ul');
   const phone = document.createElement('li');
   const email = document.createElement('li');
-
   phone.textContent = contact.phone;
   email.textContent = contact.email;
   information.append(phone);
