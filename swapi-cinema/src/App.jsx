@@ -47,13 +47,14 @@ class App extends Component {
     return (
       <Fragment>
         <header className="navbar-expand-md navbar-dark fixed-top bg-dark">
-          <nav className="container">
+          <nav className="container d-flex justify-content-between">
             <h1 className="display-6 text-warning">Swapi Cinema</h1>
-            <Search />
+
+            <Search></Search>
           </nav>
         </header>
 
-        <main className="container mt-5 pt-5">{this.renderFilms()}</main>
+        <main className="container mt-5 pt-5">{this.renderMainScreen()}</main>
       </Fragment>
     );
   }
