@@ -31,3 +31,44 @@ const person = {
     },
   ],
 };
+
+console.warn(`
+Folosind obiectul person si reduce, afiseaza in consola un string care contine skillurile de pe pozitiile pare ale arrayului, separate prin virgula
+
+`);
+
+let message = '';
+
+message = person.skills.reduce((message, skill, index) => {
+  return `${message} ${index === 0 ? '' : ','} ${skill}`;
+}, '');
+
+console.log(message);
+
+console.warn(`
+in mod similar, afiseaza skillurile care nu incep cu j.
+`);
+
+message = person.skills.reduce((message, skill, index) => {
+  if (skill.startsWith('j')) {
+    return message;
+  }
+
+  return ` ${message} ${index === 0 ? '' : ','} ${skill}`;
+});
+
+console.log(message);
+
+console.warn(`Folosind reduce afiseaza propozitia: "Prietenii mei se numesc xxx yyy, xxx yyy, xxx yyy."
+`);
+
+message = person.friends.reduce(
+  (message, { name, surname }, index, friends) => {
+    const punctuation = index === friends.length - 1 ? '.' : ', ';
+
+    return `${message}${name} ${surname}${punctuation}`;
+  },
+  'Prietenii mei se numesc ',
+);
+
+console.log(message);
