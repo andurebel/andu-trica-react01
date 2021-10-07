@@ -72,3 +72,27 @@ message = person.friends.reduce(
 );
 
 console.log(message);
+
+console.warn(`Folosind reduce, afiseaza numarul total de ani pe care il au persoanele din arrayul friends, doar daca varsta este mai mare sau egala cu 30 de ani.
+`);
+
+message = person.friends.reduce((sumYears, friend) => {
+  const { age } = friend;
+
+  return age >= 30 ? sumYears + age : sumYears;
+}, 0);
+
+console.log(message);
+
+console.warn(`doar skillurile care incep cu j. `);
+
+let filteredSkills = person.skills.reduce((filteredSkills, skill) => {
+  if (!skill.startsWith('j')) {
+    return filteredSkills;
+  }
+
+  filteredSkills.push(skill);
+  return filteredSkills;
+}, []);
+
+console.log(filteredSkills);
