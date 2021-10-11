@@ -24,6 +24,7 @@ class SearchCharacters extends Component {
           busy: false,
           searchTerm: '',
         });
+
         this.props.onSearchResults(characters);
       });
   };
