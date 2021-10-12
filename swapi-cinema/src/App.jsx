@@ -3,25 +3,17 @@ import Film from './components/Film';
 import Films from './components/Films';
 import PurchaseFilm from './components/PurchaseFilm';
 import Search from './components/Search';
-import Films from './components/Films';
-import SearchCharacters from './components/SearchCharacters';
-import Characters from './components/Characters';
 
 const baseUrl = 'https://swapi.dev/api/films';
-const charactersUrl = 'https://swapi.dev/api/people/';
 
 class App extends Component {
   state = {
     busy: true,
     films: [],
-<<<<<<< HEAD
-    characters: [],
-=======
     errorMessage: '',
     hasSearchResults: false,
     selectedFilm: null,
     purchasing: false,
->>>>>>> temp-work
   };
 
   getFilms() {
@@ -52,47 +44,12 @@ class App extends Component {
       });
   }
 
-<<<<<<< HEAD
-  getCharacters() {
-    this.setState({
-      busy: true,
-=======
   clearSearchResults() {
     this.getFilms().then(() => {
       this.setState({
         hasSearchResults: false,
       });
->>>>>>> temp-work
     });
-
-    fetch(charactersUrl)
-      .then((response) => {
-        return response.json();
-      })
-      .then(({ results }) => {
-        this.setState({
-          characters: results,
-          busy: false,
-        });
-      });
-  }
-
-  renderFilms() {
-    return (
-      <>
-        <h2>Available films</h2>
-        <Films films={this.state.films} />
-      </>
-    );
-  }
-
-  renderCharacters() {
-    return (
-      <>
-        <h2>Characters</h2>
-        <Characters characters={this.state.characters} />
-      </>
-    );
   }
 
   renderFilms() {
@@ -155,7 +112,17 @@ class App extends Component {
     }
 
     if (this.state.purchasing === true) {
-      return <PurchaseFilm film={this.state.selectedFilm}></PurchaseFilm>;
+      return (
+        <PurchaseFilm
+          film={this.state.selectedFilm}
+          cancelPurchase={() => {
+            this.setState({
+              purchasing: false,
+              selectedFilm: null,
+            });
+          }}
+        ></PurchaseFilm>
+      );
     }
 
     return this.state.selectedFilm !== null
@@ -163,16 +130,8 @@ class App extends Component {
       : this.renderFilms();
   }
 
-  renderCharactersScreen() {
-    if (this.state.busy === true) {
-      return <>Loading...</>;
-    }
-    return this.renderCharacters();
-  }
-
   componentDidMount() {
     this.getFilms();
-    this.getCharacters();
   }
 
   render() {
@@ -181,40 +140,20 @@ class App extends Component {
         <header className="navbar-expand-md navbar-dark fixed-top bg-dark">
           <nav className="container d-flex justify-content-between">
             <h1 className="display-6 text-warning">Swapi Cinema</h1>
-<<<<<<< HEAD
-
-=======
->>>>>>> temp-work
             <Search
               onSearchResults={(films) => {
                 this.setState({
                   films,
-<<<<<<< HEAD
-                });
-              }}
-            ></Search>
-            <SearchCharacters
-              onSearchResults={(characters) => {
-                this.setState({
-                  characters,
-                });
-              }}
-            />
-=======
                   hasSearchResults: true,
                   selectedFilm: null,
                 });
               }}
               placeholder="Choose a SW movie"
             ></Search>
->>>>>>> temp-work
           </nav>
         </header>
 
         <main className="container mt-5 pt-5">{this.renderMainScreen()}</main>
-        <section className="container mt-5 pt-5">
-          {this.renderCharactersScreen()}
-        </section>
       </Fragment>
     );
   }

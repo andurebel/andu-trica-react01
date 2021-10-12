@@ -23,15 +23,6 @@ class Films extends Component {
               className="btn btn-sm btn-light"
               type="button"
               title={`View details about ${title}`}
-<<<<<<< HEAD
-            >
-              Details
-            </button>
-            <button
-              className="btn-sm btn-warning"
-              type="button"
-              title={`Buy ticket for ${title}`}
-=======
               onClick={() => {
                 this.props.selectFilm(film);
               }}
@@ -46,7 +37,6 @@ class Films extends Component {
               onClick={() => {
                 this.props.purchaseFilm(film);
               }}
->>>>>>> temp-work
             >
               Buy Tickets
             </button>
