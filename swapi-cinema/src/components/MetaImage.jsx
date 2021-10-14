@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 
 const baseUrl =
   'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI';
-const apiKey = '3474c8dc47mshc14d56efb29358ap1c3cc5jsn59ffb925e19c';
+const apiKey = process.env.REACT_APP_WEB_SEARCH_KEY;
 const host = 'contextualwebsearch-websearch-v1.p.rapidapi.com';
 
 export const MetaImage = ({ term }) => {
   const [busy, setBusy] = useState(true);
-  const [imageUrl, SetImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
     const refinedSearchTerm = encodeURIComponent(`star wars ${term}`);
-    const random = Math.floor(Math.random() * 2000) + 2;
+    const random = Math.floor(Math.random() * 2000) + 1;
 
     setTimeout(() => {
       fetch(
@@ -29,15 +29,16 @@ export const MetaImage = ({ term }) => {
         })
         .then((data) => {
           const imageUrl = data.value[0].url;
+
           setBusy(false);
-          SetImageUrl(imageUrl);
+          setImageUrl(imageUrl);
         });
     }, random);
   }, [term]);
 
   return (
     <>
-      {busy ? (
+      {busy === true ? (
         '...loading'
       ) : (
         <img className="img-fluid" src={imageUrl} alt={term}></img>
