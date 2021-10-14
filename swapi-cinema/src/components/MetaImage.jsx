@@ -6,7 +6,7 @@ const apiKey = '3474c8dc47mshc14d56efb29358ap1c3cc5jsn59ffb925e19c';
 const host = 'contextualwebsearch-websearch-v1.p.rapidapi.com';
 
 export const MetaImage = ({ term }) => {
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(true);
   const [imageUrl, SetImageUrl] = useState('');
 
   useEffect(() => {
@@ -14,8 +14,6 @@ export const MetaImage = ({ term }) => {
     const random = Math.floor(Math.random() * 3000) + 2;
 
     setTimeout(() => {
-      setBusy(true);
-
       fetch(
         `${baseUrl}?q=${refinedSearchTerm}&pageNumber=1&pageSize=1&autoCorrect=true`,
         {
@@ -35,7 +33,7 @@ export const MetaImage = ({ term }) => {
           SetImageUrl(imageUrl);
         });
     }, random);
-  }, []);
+  }, [term]);
 
   return (
     <>
