@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const CartTotals = ({ cart }) => {
   const renderTableRows = () => {
     return cart.map(({ name, cost_in_credits }) => {
@@ -14,6 +12,7 @@ export const CartTotals = ({ cart }) => {
 
   const renderTotalsRow = () => {
     const total = cart.reduce((total, { cost_in_credits: price }) => {
+      // price = cartItem.cost_in_credits
       return (total += Number(price));
     }, 0);
 

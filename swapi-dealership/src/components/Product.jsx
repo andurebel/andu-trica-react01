@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { AppContext } from '../contexts/AppContext';
-//import MetaImage from './../legacy/MetaImage';
+import MetaImage from './../legacy/MetaImage';
 import { ProductDetails } from './ProductDetails';
 
 export const Product = () => {
@@ -50,7 +50,9 @@ export const Product = () => {
         </button>
       </div>
 
-      <div className="col-12 mb-4 text-center"></div>
+      <div className="col-12 mb-4 text-center">
+        <MetaImage term={product.name}></MetaImage>
+      </div>
 
       <div className="col-12 mb-4">
         <h5 className="mb-2">Specifications</h5>

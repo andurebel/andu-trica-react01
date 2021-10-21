@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AppContext } from './../contexts/AppContext';
 
-const FooterNav = () => {
+export const FooterNav = () => {
   const { state, dispatch } = useContext(AppContext);
   const { cart } = state;
 
@@ -10,6 +10,7 @@ const FooterNav = () => {
       type: 'setSelected',
       payload: null,
     });
+
     dispatch({
       type: 'setSearchResults',
       payload: [],
@@ -21,6 +22,7 @@ const FooterNav = () => {
       type: 'setScreen',
       payload: 'home',
     });
+
     cleanUpState();
   };
 
@@ -63,4 +65,5 @@ const FooterNav = () => {
     </ul>
   );
 };
+
 export default FooterNav;
