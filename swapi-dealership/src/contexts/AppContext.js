@@ -4,6 +4,7 @@ export const AppContext = createContext();
 
 export const appState = {
   currentScreen: 'home',
+  selected: null,
 };
 
 export const appStateReducer = (appState, { type, payload }) => {
@@ -14,5 +15,14 @@ export const appStateReducer = (appState, { type, payload }) => {
       currentScreen: payload,
     };
   }
+  if (type === 'setSelected') {
+    return {
+      ...appState,
+      selected: payload,
+    };
+  }
   return appState;
 };
+
+
+
