@@ -14,6 +14,7 @@ export const ProductTile = ({ product }) => {
 
     dispatch({
       type: 'setSelected',
+      payload: product,
     });
   };
 

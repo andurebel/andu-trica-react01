@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ProductTile from './ProductTile';
 
 const baseUrl = 'https://swapi.dev/api/vehicles';
@@ -7,9 +7,10 @@ export const Products = () => {
   const [products, setProducts] = useState([]);
   const [busy, setBusy] = useState(true);
 
-  //recipe
+  // recipe
   const fetchProducts = useCallback(() => {
     setBusy(true);
+
     return fetch(baseUrl)
       .then((response) => {
         return response.json();
@@ -25,18 +26,18 @@ export const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  //end recipe
+  // end recipe
 
   return (
-    <section className="row ">
+    <section className="row">
       <div className="col-12 mb-6">
-        <h2>Available listings</h2>
+        <h2>Available Listings</h2>
       </div>
 
       {products.map((product) => {
         const { name } = product;
-        return <ProductTile product={product} key={name} />;
+
+        return <ProductTile product={product} key={name}></ProductTile>;
       })}
 
       {busy ? '...loading' : <></>}

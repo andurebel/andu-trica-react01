@@ -6,6 +6,7 @@ export const appState = {
   currentScreen: 'home',
   selected: null,
   searchResults: [],
+  cart: [],
 };
 
 export const appStateReducer = (appState, { type, payload }) => {
@@ -27,6 +28,13 @@ export const appStateReducer = (appState, { type, payload }) => {
     return {
       ...appState,
       searchResults: payload,
+    };
+  }
+
+  if (type === 'addToCart') {
+    return {
+      ...appState,
+      cart: [...appState.cart, payload],
     };
   }
 

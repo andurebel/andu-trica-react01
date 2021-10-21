@@ -3,6 +3,7 @@ import Search from './legacy/Search';
 import Screen from './components/Screen';
 import { AppContext } from './contexts/AppContext';
 import { appStateReducer, appState } from './contexts/AppContext';
+import FooterNav from './components/FooterNav';
 
 const App = () => {
   const [state, dispatch] = useReducer(appStateReducer, appState);
@@ -24,11 +25,12 @@ const App = () => {
       </header>
 
       <main className="container mb-4 mt-7">
-
         <Screen screen={currentScreen} />
       </main>
 
-      <footer className="container mb-4">Footer</footer>
+      <footer className="container mb-4">
+        <FooterNav />
+      </footer>
     </AppContext.Provider>
   );
 };
