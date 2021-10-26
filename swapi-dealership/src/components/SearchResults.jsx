@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import ProductTile from './ProductTile';
+import Search from '../legacy/Search';
 
 export const SearchResults = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -8,7 +9,12 @@ export const SearchResults = () => {
 
   const renderResults = () => {
     if (searchResults.length <= 0) {
-      return <p>No products found.</p>;
+      return (
+        <>
+          <p>No products found.</p>
+          <Search className="d-inline-flex mt-4 mx-auto w-50" />
+        </>
+      );
     }
 
     return searchResults.map((product) => {

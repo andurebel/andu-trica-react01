@@ -22,7 +22,7 @@ class Search extends Component {
       .then((response) => {
         return response.json();
       })
-      .then(({ results: { results } }) => {
+      .then(({ results  }) => {
         this.setState({
           busy: false,
           searchTerm: '',
@@ -47,11 +47,11 @@ class Search extends Component {
   };
 
   render() {
+
+    const className = this.props.className || '';
+
     return (
-      <form
-        className="d-inline-flex align-self-center"
-        onSubmit={this.onSubmit}
-      >
+      <form className={className} onSubmit={this.onSubmit}>
         <input
           className="form-control me-2 align-self-center"
           type="text"
