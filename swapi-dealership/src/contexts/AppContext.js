@@ -7,6 +7,10 @@ export const appState = {
   selected: null,
   searchResults: [],
   cart: [],
+  order: {
+    address: {},
+    items: [],
+  },
 };
 
 export const appStateReducer = (appState, { type, payload }) => {
@@ -45,6 +49,13 @@ export const appStateReducer = (appState, { type, payload }) => {
     return {
       ...appState,
       cart,
+    };
+  }
+
+  if (type === 'setOrder') {
+    return {
+      ...appState,
+      order: payload,
     };
   }
 
