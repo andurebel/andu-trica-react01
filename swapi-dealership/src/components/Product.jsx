@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { AppContext } from '../contexts/AppContext';
 //import MetaImage from './../legacy/MetaImage';
 import Dialog from './Dialog';
@@ -20,10 +20,24 @@ export const Product = () => {
     );
   }, [cart, product.name]);
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const navigateHome = () => {
     dispatch({
       type: 'setScreen',
       payload: 'home',
+    });
+
+    dispatch({
+      type: 'setSelected',
+      payload: null,
+    });
+  };
+
+  const navigateToCart = () => {
+    dispatch({
+      type: 'setScreen',
+      payload: 'cart',
     });
 
     dispatch({
@@ -37,6 +51,8 @@ export const Product = () => {
       type: 'addToCart',
       payload: product,
     });
+
+    setIsDialogOpen(true);
   };
 
   const removeFromCart = () => {
@@ -93,7 +109,48 @@ export const Product = () => {
         </button>
       </div>
 
-      <Dialog show={true}>hello from portal</Dialog>
+      <Dialog
+        show={isDialogOpen}
+        onClose={() => {
+          setIsDialogOpen(false);
+        }}
+      >
+        <div className="alert alert-success">
+          {product.name}({product.cost_in_credits}) added to cart
+        </div>
+
+        <div className="d-flex justify-content-between mt-6">
+          <button
+            className="btn btn-secondary btn-sm"
+            title="see cart"
+            type="button"
+            onclick={navigateToCart}
+          >
+            See cart
+          </button>
+
+          <button
+            className="btn btn-secondary btn-sm"
+            title="Continue shopping"
+            type="button"
+            onClick={navigateHome}
+          >
+            Continue shopping
+          </button>
+
+          <div className="text-end mt-2">
+            <button
+              className="btn btn-danger btn-xl"
+              type="button"
+              onClick={() => {
+                setIsDialogOpen(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Dialog>
     </section>
   );
 };
