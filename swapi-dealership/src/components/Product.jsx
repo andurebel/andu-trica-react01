@@ -124,7 +124,7 @@ export const Product = () => {
             className="btn btn-secondary btn-sm"
             title="see cart"
             type="button"
-            onclick={navigateToCart}
+            onClick={navigateToCart}
           >
             See cart
           </button>
