@@ -17,6 +17,15 @@ export const Checkout = () => {
         items: [...cart],
       },
     });
+
+    dispatch({
+      type: 'setScreen',
+      payload: 'orderConfirmation',
+    });
+
+    dispatch({
+      type: 'emptyCart',
+    });
   };
 
   return (

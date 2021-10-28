@@ -52,6 +52,13 @@ export const appStateReducer = (appState, { type, payload }) => {
     };
   }
 
+  if (type === 'emptyCart') {
+    return {
+      ...appState,
+      cart: [],
+    };
+  }
+
   if (type === 'setOrder') {
     return {
       ...appState,
