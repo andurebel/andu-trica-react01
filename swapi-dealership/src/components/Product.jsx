@@ -1,8 +1,8 @@
 import { useContext, useMemo } from 'react';
 import { AppContext } from '../contexts/AppContext';
 //import MetaImage from './../legacy/MetaImage';
-import { ProductDetails } from './ProductDetails';
 import Dialog from './Dialog';
+import { ProductDetails } from './ProductDetails';
 
 export const Product = () => {
   const { dispatch, state } = useContext(AppContext);
@@ -13,9 +13,11 @@ export const Product = () => {
   //   ? true
   //   : false;
   const productInCart = useMemo(() => {
-    return cart.find((cartItem) => {
-      return cartItem.name === product.name;
-    });
+    return Boolean(
+      cart.find((cartItem) => {
+        return cartItem.name === product.name;
+      }),
+    );
   }, [cart, product.name]);
 
   const navigateHome = () => {
@@ -58,10 +60,10 @@ export const Product = () => {
         </button>
       </div>
 
-      {/*<div className="col-12 mb-4 text-center">
-        <MetaImage term={product.name}></MetaImage>
+      <div className="col-12 mb-4 text-center">
+        {/*<MetaImage term={product.name}></MetaImage>*/}
       </div>
-*/}
+
       <div className="col-12 mb-4">
         <h5 className="mb-2">Specifications</h5>
 

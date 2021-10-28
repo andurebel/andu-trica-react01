@@ -1,10 +1,8 @@
-import React from 'react';
-
 export const Address = ({ address }) => {
   const renderTableRows = () => {
     const entries = Object.entries(address);
 
-    entries.map(([key, value]) => {
+    return entries.map(([key, value]) => {
       return (
         <tr key={key}>
           <td>{key}</td>
