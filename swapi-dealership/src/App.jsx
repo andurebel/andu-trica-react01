@@ -5,6 +5,8 @@ import { AppContext } from './contexts/AppContext';
 import { appStateReducer, appState } from './contexts/AppContext';
 import FooterNav from './components/FooterNav';
 
+import Logo from './components/Logo';
+
 const App = () => {
   const [state, dispatch] = useReducer(appStateReducer, appState);
 
@@ -18,8 +20,10 @@ const App = () => {
   return (
     <AppContext.Provider value={contextValue}>
       <header className="navbar-dark fixed-top bg-dark border-bottom border-warning">
-        <nav className="container d-flex justify-content-between">
-          <h1 className="display-6 text-warning">Swapi vehicles</h1>
+        <nav className="container d-flex justify-content-between align-items-center">
+          <Logo />
+
+          <h1 className="display-6 text-center text-warning">Swapi vehicles</h1>
           <Search className="d-inline-flex align-self-center" />
         </nav>
       </header>

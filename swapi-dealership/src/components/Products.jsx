@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ProductTile from './ProductTile';
 
+
 const baseUrl = 'https://swapi.dev/api/vehicles';
 
 export const Products = () => {
