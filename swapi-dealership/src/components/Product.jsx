@@ -85,7 +85,7 @@ export const Product = () => {
 
         <ProductDetails
           product={product}
-          inCart={productInCart}
+          productInCart={productInCart}
         ></ProductDetails>
       </div>
 
