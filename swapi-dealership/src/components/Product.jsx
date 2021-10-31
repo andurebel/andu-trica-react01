@@ -83,7 +83,10 @@ export const Product = () => {
       <div className="col-12 mb-4">
         <h5 className="mb-2">Specifications</h5>
 
-        <ProductDetails product={product}></ProductDetails>
+        <ProductDetails
+          product={product}
+          inCart={productInCart}
+        ></ProductDetails>
       </div>
 
       <div className="col-12 col-md-6 offset-md-3 d-flex justify-content-between">
@@ -156,3 +159,4 @@ export const Product = () => {
 };
 
 export default Product;
+

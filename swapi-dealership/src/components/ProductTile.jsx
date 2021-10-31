@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { AppContext } from './../contexts/AppContext';
 
-export const ProductTile = ({ product }) => {
+
+export const ProductTile = ({ product, productInCart }) => {
   const { name, model } = product;
   const { dispatch } = useContext(AppContext);
 
@@ -35,6 +36,13 @@ export const ProductTile = ({ product }) => {
         >
           Details
         </button>
+        <div className="pt-2">
+          {productInCart ? (
+            <i class="far fa-cart-plus text-primary"></i>
+          ) : (
+            <i className="fas fa-shopping-cart text-secondary"></i>
+          )}
+        </div>
       </section>
     </article>
   );
