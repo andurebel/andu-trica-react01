@@ -4,10 +4,15 @@ export const App = () => {
   return (
     <>
       <Header />
-      <main>app goes here</main>
+      <main>
+        <button onClick={()=>{}}>Test</button>
+      </main>
       <Footer />
     </>
   );
 };
 
 export default App;
+
+//actions ->{type:'',payload:{}} /types /creators
+//reducers 
