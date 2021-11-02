@@ -23,10 +23,11 @@ export const ProductTile = ({ product, productInCart }) => {
       <header className="flex-grow-1 text-center mb-4">
         <h5 className="text-warning text-left">{name}</h5>
         <div className="img-responsive bg-secondary">
-          <p className="py-5">I have no image, sorry :(</p>
+          <p className="py-5 display-6">
+            I have no <del>image</del>, sorry!😔
+          </p>
           <img
-            height="200"
-            width="200"
+            className="img-fluid "
             src="https://i.pinimg.com/originals/da/8c/21/da8c2163061be58d770f6f9af78258e8.png"
             alt="sad"
           />
