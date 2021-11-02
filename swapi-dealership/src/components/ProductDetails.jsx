@@ -14,7 +14,7 @@ export const ProductDetails = ({ product }) => {
   };
 
   return (
-    <table className="table table-dark">
+    <table className="table table-dark table-responsive">
       <tbody>{renderTableRows()}</tbody>
     </table>
   );
