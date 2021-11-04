@@ -33,7 +33,7 @@ export const App = () => {
             dispatch(clickClicker());
           }}
         >
-          Test
+          Increment
         </button>
       </main>
       <Footer></Footer>
