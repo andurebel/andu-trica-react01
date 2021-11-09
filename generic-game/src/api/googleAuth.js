@@ -3,6 +3,11 @@ import store from "./../store";
 
 let eventBound = false;
 
+const googleOauthAppId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+if (googleOauthAppId === undefined) {
+  throw new Error("Google client ID not found");
+}
+
 // recipe
 export const initializeGoogleAuth = async () => {
   return new Promise((resolve) => {

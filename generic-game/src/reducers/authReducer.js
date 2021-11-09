@@ -1,4 +1,4 @@
-import { AUTH_LOGIN } from "../actions/types/auth";
+import { AUTH_LOGIN, AUTH_LOGOUT } from "../actions/types/auth";
 
 const initialState = {
   // THE BAD:
@@ -21,6 +21,13 @@ const authReducer = (state = initialState, action) => {
         authenticated: true,
         established: true,
         user: payload,
+      };
+    case AUTH_LOGOUT:
+      return {
+        ...state,
+        authenticated: false,
+        established: true,
+        user: null,
       };
     default:
       return state;
