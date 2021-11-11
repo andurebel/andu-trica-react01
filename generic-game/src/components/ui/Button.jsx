@@ -2,7 +2,9 @@ import React from "react";
 
 const skins = {
   primary:
-    "bg-blue-500 inline-block text-center py-2 px-4 text-white rounded hover:bg-indigo-700",
+    "bg-blue-500 inline-block text-center py-2 px-4 text-white rounded hover:bg-green-500",
+  primaryInverted:
+    "border border-green-500 inline-block text-center py-2 px-4 rounded hover:bg-green-700 hover:text-white ",
 };
 
 export const Button = (props) => {
