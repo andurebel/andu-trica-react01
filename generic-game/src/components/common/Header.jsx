@@ -1,15 +1,14 @@
 import { SiLetterboxd } from "react-icons/si";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "../ui/Button";
-import { requestSignIn } from "../../actions/creators/auth";
+import { requestSignIn, requestLogOut } from "../../actions/creators/auth";
 import { FaUserAlt } from "react-icons/fa";
+import { useAuth } from "./../../hooks";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const authenticated = useSelector((state) => {
-    return state.auth.authenticated;
-  });
+  const { authenticated } = useAuth();
 
   const renderUserControls = () => {
     if (authenticated) {
@@ -25,7 +24,9 @@ export const Header = () => {
             skin="primaryInverted"
             type="button"
             title="Log out"
-            onClick={() => {}}
+            onClick={() => {
+              dispatch(requestLogOut());
+            }}
             className="ml-2"
           >
             Log out

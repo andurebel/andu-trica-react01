@@ -22,3 +22,11 @@ export const requestSignIn = () => {
     });
   };
 };
+
+export const requestLogOut = () => {
+  return async () => {
+    return initializeGoogleAuth().then((GoogleAuth) => {
+      GoogleAuth.signOut();
+    });
+  };
+};
