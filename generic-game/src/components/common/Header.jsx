@@ -4,13 +4,18 @@ import { useDispatch } from "react-redux";
 import Button from "../ui/Button";
 import { requestSignIn, requestLogOut } from "../../actions/creators/auth";
 import { FaUserAlt } from "react-icons/fa";
+import { CgSpinnerTwo } from "react-icons/cg";
 import { useAuth } from "./../../hooks";
 
 export const Header = () => {
   const dispatch = useDispatch();
-  const { authenticated } = useAuth();
+  const { authenticated, established } = useAuth();
 
   const renderUserControls = () => {
+    if (!established) {
+      return <CgSpinnerTwo className="animate-spin" />;
+    }
+
     if (authenticated) {
       return (
         <>
