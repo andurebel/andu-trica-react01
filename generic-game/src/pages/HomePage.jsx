@@ -8,7 +8,7 @@ export const HomePage = () => {
     <>
       <div className="p-4 container mx-auto">
         {!established ? (
-          <CgSpinnerTwo className="animate-spin mx-auto text-4xl" />
+          <CgSpinnerTwo className="animate-spin mx-auto text-4xl text-green-700" />
         ) : authenticated ? (
           "user logged in"
         ) : (
