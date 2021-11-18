@@ -1,5 +1,6 @@
 import { useAuth } from "../hooks";
 import { CgSpinnerTwo } from "react-icons/cg";
+import ProfilePage from "./ProfilePage";
 
 export const HomePage = () => {
   const { authenticated, established } = useAuth();
@@ -10,7 +11,7 @@ export const HomePage = () => {
         {!established ? (
           <CgSpinnerTwo className="animate-spin mx-auto text-4xl text-green-700" />
         ) : authenticated ? (
-          "user logged in"
+          <ProfilePage />
         ) : (
           <div className="text-center">
             <button
