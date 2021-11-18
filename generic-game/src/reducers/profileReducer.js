@@ -20,7 +20,6 @@ export const profileReducer = (state = initialState, { type, payload }) => {
         ...state,
         stats: payload,
       };
-
     default:
       return state;
   }

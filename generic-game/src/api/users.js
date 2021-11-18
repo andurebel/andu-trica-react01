@@ -10,9 +10,9 @@ const usersApi = axios.create({
   baseURL: process.env.REACT_APP_API_BASE,
 });
 
-//CRUD -> create read update delete
+// CRUD -> Create Read Update Delete
 
-//create user
+// createUser
 export const createUser = async (userId) => {
   const payload = {
     id: userId,
@@ -22,39 +22,42 @@ export const createUser = async (userId) => {
   return await usersApi.post("/users", payload);
 };
 
-//read user
-
+// readUser
 export const readUser = async (userId) => {
-  const endpoint = `users/${userId}`;
+  const endpoint = `/users/${userId}`;
 
   const { data } = await usersApi.get(endpoint);
+
   if (data.stats) {
     return data.stats;
   }
+
   return undefined;
 };
 
-//create profile
-//POST /profiles/123123
-
+// createProfile
+// POST /profiles/2312313
 export const createProfile = async (userId, colors) => {
   const payload = {
     id: userId,
     creature: colors,
   };
-  return await usersApi.post(`/profiles/${userId}`, payload);
+
+  return await usersApi.post(`/profiles`, payload);
 };
 
-//read profile
-
+// readProfile
 export const readProfile = async (userId) => {
   const { data } = await usersApi.get(`/profiles/${userId}`);
 
   if (data.creature) {
     return data.creature;
   }
+  // return data?.creature;
+
+  return undefined;
 };
 
-//update profile
+// updateProfile
 
 export default usersApi;
