@@ -1,4 +1,4 @@
-import { PROFILE_SET_STATS } from "../actions/types/profile";
+import { PROFILE_SET_STATS, PROFILE_SET_COLOR } from "../actions/types/profile";
 
 const initialState = {
   stats: {
@@ -19,6 +19,15 @@ export const profileReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         stats: payload,
+      };
+
+    case PROFILE_SET_COLOR:
+      return {
+        ...state,
+        creature: {
+          ...state.creature,
+          [payload.targetProperty]: payload.color,
+        },
       };
     default:
       return state;

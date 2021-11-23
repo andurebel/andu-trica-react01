@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
-import { Button } from "../ui";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "./../ui";
+import { setCreatureColor } from "../../actions/creators/profile";
 // import {Spinner} from './../ui/loaders'
 // import {Input, Select, Checkbox} from './../ui/forms'
 
@@ -13,6 +14,15 @@ export const ProfileForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
   };
+  const dispatch = useDispatch();
+  const onColorPickerChange = (event) => {
+    const element = event.target;
+    const targetProperty = element.name;
+    const colorValue = element.value;
+
+    // dispatch to state
+    dispatch(setCreatureColor(targetProperty, colorValue));
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -23,6 +33,7 @@ export const ProfileForm = () => {
           name="mainColor"
           id="mainColor"
           value={mainColor}
+          onChange={onColorPickerChange}
         ></input>
       </div>
 
@@ -33,6 +44,7 @@ export const ProfileForm = () => {
           name="secondaryColor"
           id="secondaryColor"
           value={secondaryColor}
+          onChange={onColorPickerChange}
         ></input>
       </div>
 
@@ -43,6 +55,7 @@ export const ProfileForm = () => {
           name="eyeColor"
           id="eyeColor"
           value={eyeColor}
+          onChange={onColorPickerChange}
         ></input>
       </div>
 
