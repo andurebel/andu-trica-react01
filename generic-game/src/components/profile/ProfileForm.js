@@ -1,6 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "./../ui";
-import { setCreatureColor } from "../../actions/creators/profile";
+import {
+  setCreatureColor,
+  patchUserProfile,
+} from "../../actions/creators/profile";
 // import {Spinner} from './../ui/loaders'
 // import {Input, Select, Checkbox} from './../ui/forms'
 
@@ -11,8 +14,13 @@ export const ProfileForm = () => {
     return creature;
   });
 
+  const userId = useSelector(({ auth }) => {
+    return auth.user.id;
+  });
+
   const onSubmit = (event) => {
     event.preventDefault();
+    dispatch(patchUserProfile(userId, { mainColor, secondaryColor, eyeColor }));
   };
   const dispatch = useDispatch();
   const onColorPickerChange = (event) => {
