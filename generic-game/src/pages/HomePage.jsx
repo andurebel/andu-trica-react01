@@ -1,20 +1,24 @@
-import { useAuth } from "../hooks";
+import { useAuth, useStats } from "../hooks";
 import { Spinner } from "../components/ui/";
-import ProfilePage from "./ProfilePage";
+//import ProfilePage from "./ProfilePage";
 import { requestSignIn } from "../actions/creators/auth";
 import { useDispatch } from "react-redux";
+import { UserStats } from "../components/profile";
 
 export const HomePage = () => {
   const { authenticated, established } = useAuth();
+  const stats = useStats();
   const dispatch = useDispatch();
 
   return (
     <>
       <div className="p-4 container mx-auto">
+        <h1>Welcome to generic game</h1>
         {!established ? (
           <Spinner />
         ) : authenticated ? (
-          <ProfilePage />
+          //<ProfilePage/>
+          <UserStats {...stats}></UserStats>
         ) : (
           <div className="text-center">
             <button
