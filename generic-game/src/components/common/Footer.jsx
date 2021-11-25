@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks";
 
 export const Footer = () => {
+  const { user } = useAuth();
   return (
     <footer className="border border-top p-4">
       <div className="container mx-auto">
@@ -18,9 +20,9 @@ export const Footer = () => {
             <li>
               <NavLink
                 to="/profile"
-                title="Go to profile"
                 className="font-bold"
                 activeClassName="text-red-500"
+                title={`Hi ${user ? `, ${user.firstName}` : ""}! Go to profile`}
               >
                 Profile
               </NavLink>

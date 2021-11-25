@@ -4,3 +4,4 @@ export * from "./ProfilePage";
 export * from "./RankPage";
 export * from "./RanksPage";
 export * from "./GamePage";
+export * from "./PlayPage";

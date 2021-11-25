@@ -1,15 +1,18 @@
 import { useAuth } from "../hooks";
-import { CgSpinnerTwo } from "react-icons/cg";
+import { Spinner } from "../components/ui/";
 import ProfilePage from "./ProfilePage";
+import { requestSignIn } from "../actions/creators/auth";
+import { useDispatch } from "react-redux";
 
 export const HomePage = () => {
   const { authenticated, established } = useAuth();
+  const dispatch = useDispatch();
 
   return (
     <>
       <div className="p-4 container mx-auto">
         {!established ? (
-          <CgSpinnerTwo className="animate-spin mx-auto text-4xl text-green-700" />
+          <Spinner />
         ) : authenticated ? (
           <ProfilePage />
         ) : (
@@ -18,6 +21,7 @@ export const HomePage = () => {
               className="w-75 md:max-w-xl w-3/4 py-20 border rounded-md shadow hover:bg-gray-100"
               type="button"
               title="Login"
+              onClick={() => dispatch(requestSignIn())}
             >
               Login to get started
             </button>
