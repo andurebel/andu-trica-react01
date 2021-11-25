@@ -4,15 +4,12 @@ import {
   setCreatureColor,
   patchUserProfile,
 } from "../../actions/creators/profile";
+import { useProfileColors } from "../../hooks/useProfileColors";
 // import {Spinner} from './../ui/loaders'
 // import {Input, Select, Checkbox} from './../ui/forms'
 
 export const ProfileForm = () => {
-  const { mainColor, secondaryColor, eyeColor } = useSelector(({ profile }) => {
-    const { creature } = profile;
-
-    return creature;
-  });
+  const { mainColor, secondaryColor, eyeColor } = useProfileColors();
 
   const userId = useSelector(({ auth }) => {
     return auth.user.id;

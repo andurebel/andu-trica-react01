@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { ProfileForm } from "../components/profile";
+import { ProfileForm, Creature } from "../components/profile";
 import { useAuth } from "../hooks";
 
 export const ProfilePage = () => {
@@ -16,12 +16,15 @@ export const ProfilePage = () => {
   return (
     <div className="container mx-auto p-4">
       <header>
-        <h1>Header1</h1>
+        <h1 className="text-2xl font-bold">Your profile</h1>
       </header>
 
       <section className="flex justify-between flex-wrap mt-8">
         <div className="w-full md:w-8/12">
           {/* create UserProfile component, and populate it with info from the store */}
+        </div>
+        <div className="w-full md:4/12 flex justify-center mt-8 md:mt-0">
+          <Creature />
         </div>
       </section>
 
