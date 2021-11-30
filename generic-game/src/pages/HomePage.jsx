@@ -1,9 +1,10 @@
 import { useAuth, useStats } from "../hooks";
-import { Spinner } from "../components/ui/";
+import { Spinner, Button } from "../components/ui/";
 //import ProfilePage from "./ProfilePage";
 import { requestSignIn } from "../actions/creators/auth";
 import { useDispatch } from "react-redux";
 import { UserStats } from "../components/profile";
+import { Link } from "react-router-dom";
 
 export const HomePage = () => {
   const { authenticated, established } = useAuth();
@@ -18,7 +19,16 @@ export const HomePage = () => {
           <Spinner />
         ) : authenticated ? (
           //<ProfilePage/>
-          <UserStats {...stats}></UserStats>
+          <>
+            <UserStats {...stats} className="mt-8"></UserStats>
+            <div className="mt-2 text-center">
+              <Link to="/play" element="span">
+                <Button title="play now" type="button">
+                  Play
+                </Button>
+              </Link>
+            </div>
+          </>
         ) : (
           <div className="text-center">
             <button
