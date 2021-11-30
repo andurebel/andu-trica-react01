@@ -4,6 +4,8 @@ import {
   readProfile,
   readUser,
   updateProfile,
+  updateGameLost,
+  updateGameWon,
 } from "../../../api/users";
 import {
   PROFILE_SET_COLOR,
@@ -85,5 +87,35 @@ export const setCreatureColors = (creatureColors) => {
   return {
     type: PROFILE_SET_COLORS,
     payload: creatureColors,
+  };
+};
+
+export const patchGameLost = () => {
+  return async (dispatch, getState) => {
+    const { auth, profile } = getState();
+    const { id: userId } = auth.user;
+
+    try {
+      const userStats = await updateGameLost(userId, profile.stats);
+
+      dispatch(setUserStats(userStats));
+    } catch (error) {
+      return Promise.reject(error.response);
+    }
+  };
+};
+
+export const patchGameWon = () => {
+  return async (dispatch, getState) => {
+    const { auth, profile } = getState();
+    const { id: userId } = auth.user;
+
+    try {
+      const userStats = await updateGameWon(userId, profile.stats);
+
+      dispatch(setUserStats(userStats));
+    } catch (error) {
+      return Promise.reject(error.response);
+    }
   };
 };
