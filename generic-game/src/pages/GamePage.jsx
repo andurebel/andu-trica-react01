@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Creature } from "../components/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../components/ui";
@@ -11,6 +12,14 @@ export const GamePage = () => {
   const { playing } = useSelector(({ game }) => {
     return game;
   });
+
+  useEffect(() => {
+    return () => {
+      if (playing) {
+        dispatch(gameEnded());
+      }
+    };
+  }, [dispatch, playing]);
 
   return (
     <div className="p-4 container flex mx-auto ">

@@ -1,3 +1,5 @@
+import { SET_USERS } from "./../../types/auth/index";
+import { readUsers } from "./../../../api/users";
 import { initializeGoogleAuth } from "../../../api/googleAuth";
 import {
   getUserProfile,
@@ -67,5 +69,24 @@ export const requestLogOut = () => {
     return initializeGoogleAuth().then((GoogleAuth) => {
       GoogleAuth.signOut();
     });
+  };
+};
+
+//should be in an users slice and
+
+export const getUsers = (users) => {
+  return async (dispatch) => {
+    try {
+      dispatch(setUsers(users));
+    } catch (response) {
+      console.log(response);
+    }
+  };
+};
+
+export const setUsers = (users) => {
+  return {
+    type: SET_USERS,
+    payload: users,
   };
 };

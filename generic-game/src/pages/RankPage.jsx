@@ -1,4 +1,6 @@
-export const RankPage = () => {
+import React from "react";
+
+const RankPage = () => {
   return "individual rank";
 };
 
