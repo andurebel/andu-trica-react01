@@ -1,5 +1,4 @@
-import { SET_USERS } from "./../../types/auth/index";
-import { readUsers } from "./../../../api/users";
+import { readUser } from "../../../api/users";
 import { initializeGoogleAuth } from "../../../api/googleAuth";
 import {
   getUserProfile,
@@ -7,7 +6,13 @@ import {
   postUserProfile,
   postUserStats,
 } from "../profile";
-import { AUTH_LOGOUT, AUTH_LOGIN } from "./../../types/auth";
+import {
+  AUTH_LOGOUT,
+  AUTH_LOGIN,
+  SET_USERS,
+  SET_USER,
+} from "./../../types/auth";
+import { readUsers } from "../../../api/users";
 
 export const login = (user) => {
   return async (dispatch) => {
@@ -74,9 +79,19 @@ export const requestLogOut = () => {
 
 //should be in an users slice and
 
-export const getUsers = (users) => {
-  return async (dispatch) => {
+// should be in a users slice!!!
+export const getUsers = (force = false) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const cached = state.users.cached;
+
+    if (cached === true && force === false) {
+      return;
+    }
+
     try {
+      const users = await readUsers();
+
       dispatch(setUsers(users));
     } catch (response) {
       console.log(response);
@@ -84,9 +99,43 @@ export const getUsers = (users) => {
   };
 };
 
+// shuld be in user slice
+export const getUser = (userId, force = false) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const user = state.users.entities[userId];
+
+    if (user !== undefined && force === false) {
+      return;
+    }
+
+    try {
+      const stats = await readUser(userId);
+
+      dispatch(
+        setUser({
+          id: userId,
+          stats,
+        }),
+      );
+    } catch (response) {
+      console.log(response);
+    }
+  };
+};
+
+// should be in a users slice!!!
 export const setUsers = (users) => {
   return {
     type: SET_USERS,
     payload: users,
+  };
+};
+
+// should be in a users slice!!!
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user,
   };
 };
