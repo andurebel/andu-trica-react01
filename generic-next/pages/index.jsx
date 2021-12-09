@@ -1,8 +1,18 @@
-import Head from "next/head";
-
-import { Films } from "../components/Films";
+import Head from 'next/head';
+import { useDispatch, useSelector } from 'react-redux';
+import { Films } from '../components/Films';
+import { decrement, increment } from '../store/ui/uiSlice';
 
 export default function Home({ hello, films }) {
+  const count = useSelector(({ ui }) => {
+    return ui.count;
+  });
+
+  const { authenticated } = useSelector(({ auth }) => {
+    return auth;
+  });
+  const dispatch = useDispatch();
+
   return (
     <>
       <Head>
@@ -10,26 +20,49 @@ export default function Home({ hello, films }) {
       </Head>
 
       <div className="flex flex-col">
-        <header className="container mx-auto py-4">Menu {hello}</header>
+        <header className="container mx-auto py-4">
+          Menu
+          {hello}
+          <div className="mt-4">
+            User is {authenticated ? 'logged in' : 'logged out'}
+          </div>
+        </header>
+
         <main className="container mx-auto py-4 flex-grow">
-          <h2 className="text-2xl text-purple-900 mt-4">SSR test</h2>
-          <Films films={films}></Films>
+          insert forms
+          <div className="mt-16">
+            <button
+              onClick={() => {
+                dispatch(decrement());
+              }}
+            >
+              Decrement
+            </button>
+            <div>{count}</div>
+            <button
+              onClick={() => {
+                dispatch(increment());
+              }}
+            >
+              Increment
+            </button>
+          </div>
         </main>
 
-        <footer></footer>
+        <footer className="container mx-auto py-4">Footer</footer>
       </div>
     </>
   );
 }
 
 export const getServerSideProps = async () => {
-  const response = await fetch("https://swapi.dev/api/films");
-  const data = await response.json();
+  // const response = await fetch('https://swapi.dev/api/films');
+  // const data = await response.json();
 
   return {
     props: {
-      hello: "world",
-      films: data.results,
+      hello: 'world',
+      films: [],
     },
   };
 };
