@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { register } from "../../pages/api/auth";
+
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
@@ -6,8 +8,16 @@ const initialState = {
   established: false,
 };
 
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (name, email, password) => {
+    const credentials = await register(name, email, password);
+    return credentials;
+  },
+);
+
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducer: {},
 });

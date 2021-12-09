@@ -1,7 +1,7 @@
-import Head from 'next/head';
-import { useDispatch, useSelector } from 'react-redux';
-import { Films } from '../components/Films';
-import { decrement, increment } from '../store/ui/uiSlice';
+import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { Films } from "../components/Films";
+import { decrement, increment } from "../store/ui/uiSlice";
 
 export default function Home({ hello, films }) {
   const count = useSelector(({ ui }) => {
@@ -24,7 +24,7 @@ export default function Home({ hello, films }) {
           Menu
           {hello}
           <div className="mt-4">
-            User is {authenticated ? 'logged in' : 'logged out'}
+            User is {authenticated ? "logged in" : "logged out"}
           </div>
         </header>
 
@@ -58,11 +58,13 @@ export default function Home({ hello, films }) {
 export const getServerSideProps = async () => {
   // const response = await fetch('https://swapi.dev/api/films');
   // const data = await response.json();
+  store;
 
   return {
     props: {
-      hello: 'world',
+      hello: "world",
       films: [],
+      initialReduxState: {},
     },
   };
 };
